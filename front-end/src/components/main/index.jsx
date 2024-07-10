@@ -29,7 +29,8 @@ export default function Main() {
 
     setTotalExpense(expense);
     setTotalIncome(income);
-  }, [allTransactions]);
+    console.log("main use effect");
+  }, []);
 
   return (
     <div className="text-center flex flex-col px-5">

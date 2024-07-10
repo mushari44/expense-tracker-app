@@ -16,7 +16,6 @@ export default function TransactionForm({ onClose, isOpen }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    // Validate amount
     if (isNaN(formData.amount) || formData.amount <= 0) {
       setError("Please enter a valid amount.");
       return;

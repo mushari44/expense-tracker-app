@@ -26,7 +26,8 @@ export default function GlobalState({ children }) {
   }
   useEffect(() => {
     fetchAllTransactions();
-  }, [allTransactions]);
+    console.log("context use effect");
+  }, []);
   async function handleFormSubmit(currentFormData) {
     if (!currentFormData.description || !currentFormData.amount) return;
     const { type, description, amount } = currentFormData;
