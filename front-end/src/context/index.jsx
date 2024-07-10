@@ -49,6 +49,7 @@ export default function GlobalState({ children }) {
       await axios.delete(
         "https://expense-tracker-server.mushari-alothman.uk/resetTransactions"
       );
+      fetchAllTransactions();
     } catch (error) {
       console.log(error);
     }
