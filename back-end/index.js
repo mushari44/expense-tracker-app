@@ -42,8 +42,8 @@ app.post("/addTransaction", async (req, res) => {
 
 app.delete("/resetTransactions", async (req, res) => {
   try {
-    await Receipt.deleteMany({});
-    res.status(200).json({ message: "All transactions deleted" });
+    const emptyTransaction = await Receipt.deleteMany({});
+    res.status(201).json(emptyTransaction);
   } catch (error) {
     res.status(500).json({ message: "Error resetting transactions", error });
   }
