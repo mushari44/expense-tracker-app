@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 const MONGODB_URI =
   process.env.mongodb ||
   "mongodb+srv://musharizh56:admin@cluster0.clvs4os.mongodb.net/ExpenseTracker";
@@ -19,22 +20,35 @@ const schema = new mongoose.Schema({
 
 const Receipt = mongoose.model("Receipt", schema);
 
-app.get("/", (req, res) => {
-  Receipt.find({}).then((receipt) => {
-    res.json(receipt);
-  });
+app.get("/", async (req, res) => {
+  try {
+    const receipts = await Receipt.find({});
+    res.json(receipts);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching receipts", error });
+  }
 });
+
 app.post("/addTransaction", async (req, res) => {
   const { type, description, amount } = req.body;
-  newTransaction = new Receipt({ type, description, amount });
-  console.log(newTransaction);
-  await newTransaction.save();
+  try {
+    const newTransaction = new Receipt({ type, description, amount });
+    await newTransaction.save();
+    res.status(201).json(newTransaction);
+  } catch (error) {
+    res.status(500).json({ message: "Error adding transaction", error });
+  }
 });
+
 app.delete("/resetTransactions", async (req, res) => {
-  Receipt.deleteMany({}).then(() => {
-    console.log("DELeETD");
-  });
+  try {
+    await Receipt.deleteMany({});
+    res.status(200).json({ message: "All transactions deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Error resetting transactions", error });
+  }
 });
+
 const PORT = process.env.PORT || 3111;
 app.listen(PORT, () => {
   console.log("listening on 3111");
