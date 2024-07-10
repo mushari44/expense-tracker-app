@@ -1,9 +1,6 @@
-import { createContext, useEffect, useState, useCallback } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-
 export const GlobalContext = createContext(null);
-
-const API_BASE_URL = "https://expense-tracker-server.mushari-alothman.uk";
 
 export default function GlobalState({ children }) {
   const [formData, setFormData] = useState({
@@ -16,49 +13,46 @@ export default function GlobalState({ children }) {
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [allTransactions, setAllTransactions] = useState([]);
-
-  const fetchAllTransactions = useCallback(async () => {
+  async function fetchAllTransactions() {
     try {
-      const response = await axios.get(`${API_BASE_URL}/`);
-      setAllTransactions(response.data);
+      const response = await axios.get(
+        "https://expense-tracker-server.mushari-alothman.uk/"
+      );
+      const data = await response.data;
+      setAllTransactions(data);
     } catch (error) {
-      console.error("Failed to fetch transactions:", error);
+      console.log(error);
     }
-  }, []);
-
+  }
   useEffect(() => {
     fetchAllTransactions();
-  }, [fetchAllTransactions]);
-
-  const handleFormSubmit = useCallback(
-    async (currentFormData) => {
-      if (!currentFormData.description || !currentFormData.amount) return;
-
-      const { type, description, amount } = currentFormData;
-
-      try {
-        await axios.post(`${API_BASE_URL}/addTransaction`, {
+  }, []);
+  async function handleFormSubmit(currentFormData) {
+    if (!currentFormData.description || !currentFormData.amount) return;
+    const { type, description, amount } = currentFormData;
+    try {
+      await axios.post(
+        "https://expense-tracker-server.mushari-alothman.uk/addTransaction",
+        {
           type,
           description,
           amount,
-        });
-        fetchAllTransactions(); // Ensure transactions are fetched after adding a new one
-      } catch (error) {
-        console.error("Failed to add transaction:", error);
-      }
-    },
-    [fetchAllTransactions]
-  );
-
-  const resetTransactions = useCallback(async () => {
-    try {
-      await axios.delete(`${API_BASE_URL}/resetTransactions`);
-      fetchAllTransactions(); // Ensure transactions are fetched after resetting
+        }
+      );
+      fetchAllTransactions();
     } catch (error) {
-      console.error("Failed to reset transactions:", error);
+      console.log(error);
     }
-  }, [fetchAllTransactions]);
-
+  }
+  async function resetTransactions() {
+    try {
+      await axios.delete(
+        "https://expense-tracker-server.mushari-alothman.uk/resetTransactions"
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <GlobalContext.Provider
       value={{
