@@ -42,7 +42,7 @@ export default function GlobalState({ children }) {
           description,
           amount,
         });
-        fetchAllTransactions();
+        fetchAllTransactions(); // Ensure transactions are fetched after adding a new one
       } catch (error) {
         console.error("Failed to add transaction:", error);
       }
@@ -53,7 +53,7 @@ export default function GlobalState({ children }) {
   const resetTransactions = useCallback(async () => {
     try {
       await axios.delete(`${API_BASE_URL}/resetTransactions`);
-      fetchAllTransactions();
+      fetchAllTransactions(); // Ensure transactions are fetched after resetting
     } catch (error) {
       console.error("Failed to reset transactions:", error);
     }
