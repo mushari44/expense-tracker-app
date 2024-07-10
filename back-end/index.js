@@ -4,9 +4,12 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
-mongoose.connect(
-  "mongodb+srv://musharizh56:admin@cluster0.clvs4os.mongodb.net/ExpenseTracker"
-);
+const MONGODB_URI =
+  process.env.mongodb ||
+  "mongodb+srv://musharizh56:admin@cluster0.clvs4os.mongodb.net/ExpenseTracker";
+mongoose.connect(MONGODB_URI).then(() => {
+  console.log("connected to the data base");
+});
 
 const schema = new mongoose.Schema({
   type: { type: String },
@@ -32,6 +35,7 @@ app.delete("/resetTransactions", async (req, res) => {
     console.log("DELeETD");
   });
 });
-app.listen(3111, () => {
+const PORT = process.env.PORT || 3111;
+app.listen(PORT, () => {
   console.log("listening on 3111");
 });
