@@ -15,7 +15,9 @@ export default function GlobalState({ children }) {
   const [allTransactions, setAllTransactions] = useState([]);
   async function fetchAllTransactions() {
     try {
-      const response = await axios.get("http://127.0.0.1:3111/");
+      const response = await axios.get(
+        "https://expense-tracker-server.mushari-alothman.uk/"
+      );
       const data = await response.data;
       setAllTransactions(data);
     } catch (error) {
@@ -29,18 +31,23 @@ export default function GlobalState({ children }) {
     if (!currentFormData.description || !currentFormData.amount) return;
     const { type, description, amount } = currentFormData;
     try {
-      await axios.post("http://127.0.0.1:3111/addTransaction", {
-        type,
-        description,
-        amount,
-      });
+      await axios.post(
+        "https://expense-tracker-server.mushari-alothman.uk/addTransaction",
+        {
+          type,
+          description,
+          amount,
+        }
+      );
     } catch (error) {
       console.log(error);
     }
   }
   async function resetTransactions() {
     try {
-      await axios.delete("http://127.0.0.1:3111/resetTransactions");
+      await axios.delete(
+        "https://expense-tracker-server.mushari-alothman.uk/resetTransactions"
+      );
     } catch (error) {
       console.log(error);
     }
