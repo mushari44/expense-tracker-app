@@ -62,6 +62,9 @@ export default function Main() {
         >
           RESET
         </button>
+        <button className="bg-red-300 text-black ml-4 sm:px-4 text-sm px-1 sm:text-base py-1 sm:py-2 rounded">
+          <a href="#report">Report</a>
+        </button>
       </div>
       <Summary
         totalExpense={totalExpense}
@@ -70,8 +73,13 @@ export default function Main() {
         onClose={onClose}
       />
       <div className="w-full flex items-start justify-evenly flex-col lg:flex-row">
-        <ExpenseView data={expenseData} type="expense" />
-        <ExpenseView data={incomeData} type="income" />
+        <section
+          className="flex w-full h-full items-center justify-center"
+          id="report"
+        >
+          <ExpenseView data={expenseData} type="expense" />
+          <ExpenseView data={incomeData} type="income" />
+        </section>
       </div>
     </div>
   );
