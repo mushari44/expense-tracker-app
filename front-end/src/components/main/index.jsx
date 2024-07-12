@@ -45,7 +45,7 @@ export default function Main() {
   );
 
   return (
-    <div className="text-center flex flex-col px-5">
+    <div className="text-center flex flex-col px-2 sm:px-5">
       <div className="flex items-center justify-center mt-5 sm:mt-12">
         <h1 className="text-blue-400 text-xl sm:text-6xl">Expense Tracker</h1>
       </div>
