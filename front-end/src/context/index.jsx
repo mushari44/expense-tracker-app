@@ -16,7 +16,7 @@ export default function GlobalState({ children }) {
   async function fetchAllTransactions() {
     try {
       const response = await axios.get(
-        "https://expense-tracker-server.mushari-alothman.uk/"
+        "https://expense-tracker-back-end-alpha.vercel.app/"
       );
       const data = await response.data;
       setAllTransactions(data);
@@ -32,7 +32,7 @@ export default function GlobalState({ children }) {
     const { type, description, amount } = currentFormData;
     try {
       await axios.post(
-        "https://expense-tracker-server.mushari-alothman.uk/addTransaction",
+        "https://expense-tracker-back-end-alpha.vercel.app/addTransaction",
         {
           type,
           description,
@@ -47,7 +47,7 @@ export default function GlobalState({ children }) {
   async function resetTransactions() {
     try {
       await axios.delete(
-        "https://expense-tracker-server.mushari-alothman.uk/resetTransactions"
+        "https://expense-tracker-back-end-alpha.vercel.app/resetTransactions"
       );
       fetchAllTransactions();
     } catch (error) {
